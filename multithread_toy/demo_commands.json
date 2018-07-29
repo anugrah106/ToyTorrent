@@ -1,0 +1,26 @@
+// Test the tracker
+
+//Port 5000
+{"type":"tfm"}
+{"port":"5555","type":"discovery","data":{"bandwidth":3,"name":"88","discovery":{"a":{"num_blocks":40,"size":20000,"name":"a","block_list":"1111111111111111111111111111111111111111"},"b":{"num_blocks":40,"size":20000,"name":"b","block_list":"1100111111111111111111111111111111111111"},"c":{"num_blocks":40,"size":20000,"name":"c","block_list":"0011111111111111111111111111111111111111"}}}}
+{"port":"5555","type":"discovery","data":{"bandwidth":3,"name":"88","discovery":{"a":{"num_blocks":40,"size":20000,"name":"a","block_list":"1111111111111111111111111111111111111111"},"b":{"num_blocks":40,"size":20000,"name":"b","block_list":"1100111111111111111111111111111111111111"},"c":{"num_blocks":40,"size":20000,"name":"c","block_list":"0011111111111111111111111111111111111111"}}}}
+{"type":"fetch","data":"a"}
+{"type":"bye","port":"4546"}
+
+// Test clients
+
+//Port 5001
+{"type":"give","data":{"name":"sample.txt","block":1}}
+{"type":"give","data":{"name":"people.json","block":0}}
+// following should give an error as block 1 implies second block. The file is in just 1 block
+{"type":"give","data":{"name":"people.json","block":1}}
+{"type":"give","data":{"name":"findingfile.cpp","block":1}}
+
+//this should kill 5001
+{"type":"kill"}
+
+// Port 5003
+// this gives a list of all peers who have some blocks of findingfile.cpp
+{"type":"download","data":"findingfile.cpp"}
+//lists all files in 5003
+{"type":"list"}
